@@ -1,0 +1,24 @@
+[
+  {
+    "title": "Product1",
+    "description": "description1",
+    "price": 56,
+    "thumbnail": "/thumbnail1.jpg",
+    "code": "P001",
+    "stock": 34,
+    "status": true,
+    "category": "cat1",
+    "id": 1
+  },
+  {
+    "title": "Product2",
+    "description": "description2",
+    "price": 56,
+    "thumbnail": "/thumbnail2.jpg",
+    "code": "P002",
+    "stock": 34,
+    "status": true,
+    "category": "cat2",
+    "id": 2
+  }
+]
