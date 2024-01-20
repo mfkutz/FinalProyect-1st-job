@@ -13,14 +13,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/', productsRouter)
 app.use('/', cartsRouter)
 
-
-//luego quitar esto///////////////////!!!!!!!!!!!!!!!!!!!////////////////////////
-app.get('/', (req, res) => {
-    res.json({
-        msg: "Server ok"
-    })
-})
-
 app.listen(port, () => {
     console.log(`Server online - PORT ${port}`)
 })

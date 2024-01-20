@@ -20,5 +20,27 @@
     "status": true,
     "category": "cat2",
     "id": 2
+  },
+  {
+    "title": "Product3",
+    "description": "description3",
+    "price": 45,
+    "thumbnail": "/thumbnail3.jpg",
+    "code": "P003",
+    "stock": 9,
+    "status": true,
+    "category": "cat2",
+    "id": 3
+  },
+  {
+    "title": "Product4",
+    "description": "description4",
+    "price": 34,
+    "thumbnail": "/thumbnail4.jpg",
+    "code": "P004",
+    "stock": 67,
+    "status": true,
+    "category": "cat1",
+    "id": 4
   }
 ]

@@ -31,15 +31,11 @@ class CartManager {
             products: []
         }
         this.carts.push(cartReady)
-        //Writing file
         const newList = JSON.stringify(this.carts, null, 2)
         try {
             await fs.promises.writeFile(this.path, newList, 'utf-8')
-            console.log('New cart created (msg from console.log)')
-            console.log(newList)
             return 'New cart created'
         } catch (error) {
-            console.error('Error writing to file', error)
             return 'Error writing to file'
         }
     }
@@ -62,68 +58,27 @@ class CartManager {
     async addProductToCart(cartId, productId, quantity = 1) {
         const carts = await this.getCarts(cartId)
         const foundCart = carts.find(cart => cart.id === cartId)
-        /* console.log(foundCart) */
 
-        if (foundCart) {
-            const productManager = new ProductManager('../products.json')
-            const foundProduct = await productManager.getProductBytId(productId)
-            /* console.log('found product',foundProduct) */
+        if (!foundCart) return 'Cart not found'
 
-            if (foundProduct !== 'Not found') {
+        const productManager = new ProductManager('./src/data/products.json')
+        const foundProduct = await productManager.getProductBytId(productId)
 
-                console.log('El producto existe, hay que ver como hacemos el push')
-                const existingProduct = foundCart.products.find(prod => prod.id === foundProduct.id)
+        if (foundProduct === 'Not found') return 'Product not found'
 
-                if (existingProduct) {
-                    existingProduct.quantity += quantity
-                } else {
-                    const cartStruct = {
-                        product: foundProduct.id,
-                        quantity: quantity
-                    }
-
-                    foundCart.products.push(cartStruct)
-                }
-
-
-                console.log(foundCart)
-
-            } else {
-                console.log('Product not found')
-            }
-
+        const existingProduct = foundCart.products.find(prod => prod.product === foundProduct.id)
+        if (existingProduct) {
+            existingProduct.quantity += quantity
         } else {
-            console.log('Cart not found')
-            return null
+            foundCart.products.push({
+                product: foundProduct.id,
+                quantity: quantity
+            })
         }
+
+        await fs.promises.writeFile(this.path, JSON.stringify(carts, null, 2))
+        return 'Cart updated'
     }
 }
-
-
-//test
-(async () => {
-    const cartManager = new CartManager('../carts.json')
-    await cartManager.initialize()
-
-    /* cartManager.createCart() */
-
-    //Obtener y mostrar todos los carritos
-    /* cartManager.getCarts()
-        .then(res => console.log(res))
-        .catch(error => console.log(error)) */
-
-    //Mostrar producto especifico
-    /* cartManager.getCartById(2)
-        .then(res => console.log(res))
-        .catch(error => console.log(error)) */
-
-    //Agregar producto al carrito
-    cartManager.addProductToCart(1, 1)
-
-
-
-
-})()
-
 
 export default CartManager
